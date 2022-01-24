@@ -27,6 +27,31 @@
   transition: all 1000ms;
 }
 
+.container{
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.heading{
+  padding-bottom: 40px;
+  color: #10459E;
+}
+
+.about-sub-title{
+  padding-bottom: 8px;
+  border-bottom-style: solid;
+  border-bottom-width: 3.1px;
+  width: fit-content;
+}
+
+.projects{
+  background-color: #10459E;
+}
+
+
+
+
+
 .intro{
   opacity: 100%;
   color: black;
