@@ -33,21 +33,38 @@
 }
 
 .heading{
-  padding-bottom: 40px;
+  padding-bottom: 10px;
   color: #10459E;
 }
 
-.about-sub-title{
+.about-title{
   padding-bottom: 8px;
   border-bottom-style: solid;
-  border-bottom-width: 3.1px;
+  border-bottom-width: 3.7px;
+  border-bottom-color: #10459E;
   width: fit-content;
+}
+
+.about-sub-title{
+ width: fit-content;
+ font-size: 20px;
+ font-weight: bold;
+ margin-bottom: 0px;
+}
+
+.about-content{
+  margin: 0px;
+  width: fit-content;
+  padding: 0px;
 }
 
 .projects{
   background-color: #10459E;
 }
 
+.profile-img {
+  height: 40vmin;
+}
 
 
 
