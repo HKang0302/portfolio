@@ -1,17 +1,49 @@
 
 import './App.css';
+import React from 'react';
 import { Row, Col, Container, Nav, input } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import {bounce} from 'react-animations';
 import styled, { keyframes } from 'styled-components';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 import homeImg from './Home.jpg'
 import profileImg from './profile.jpg'
 import contactImg from './contact.jpg'
+import Skills from './Skills.js'
+import Education from './Education.js';
+import JobExperience from './JobExperience.js';
+import ContactInfo from './ContactInfo.js'
+
+const Content = styled.p`
+  margin: 0;
+  margin-bottom: 3px;
+`;
+
+const Icons = styled.a`
+  margin-right: 7px;
+  margin-left: 7px;
+`;
 
 function App() {
+  const [values, setValues] = React.useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
   var [isNotFaded, setIsNotFaded] = useState(true);
+  var [skills, setSkills] = useState(Skills);
+  var [education, setEducation] = useState(Education);
+  var [jobExperience, setJobExperience] = useState(JobExperience);
 
   const Bounce = styled.div`
     animation: 2s ${keyframes`${bounce}`} infinite;
@@ -46,97 +78,161 @@ function App() {
         </div>
       </CSSTransition>
 
-      <div style={{paddingTop: '40px'}}>
+      {/* ABOUT */}
+      <div style={{paddingTop: '40px', width: '100%', alignContent: 'center'}}>
         <h1 className='heading'>ABOUT</h1>
-        <Container>
-          <Row>
-            <Col> 
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-auto'> 
               <img className='profile-img' src={profileImg}/> 
-              <div>
-                <p>Email: heejin444@gmail.com</p>
-                <p>Phone: +82-10-3700-6723</p>
-                <p>GITHUB | IG | FB</p>
-              </div>
-
-            </Col>
-            <Col>
+              <Contact />
+            </div>
+            <div className='col-md-auto'>
               <h4 className='about-title'>EDUCATION</h4>
               <div>
-                <p className='about-sub-title'>University of California, Irvine</p>
-                <p className='about-content'>Computer Science B.S. | 2020</p>
-                <p className='about-sub-title'>City College of San Francisco</p>
-                <p className='about-content'>Computer Science A.S. | 2018</p>
+                {
+                  education.map(function(edu, ind){
+                    return(
+                      <AboutCard value={edu} key={ind}/>
+                    )
+                  })
+                }
                 <br></br>
                 <h4 className='about-title'>JOB EXPERIENCE</h4>
-                <p className='about-sub-title'>Software Engineer</p>
-                <p className='about-content'>Sunny Wave Tech., South Korea | August 2020 - Present</p>
-                <p className='about-sub-title'>Java Teaching Assistant (TA)</p>
-                <p className='about-content'>City College of San Francisco | September 2017 - May 2018</p>
+                {
+                  jobExperience.map(function(job, ind){
+                    return(
+                      <AboutCard value={job} key={ind} />
+                    )
+                  })
+                }
               </div>
-            </Col>
-            <Col>
+            </div>
+            <div className='col-md-auto'>
               <h4 className='about-title'>SKILLS</h4>
-              <p className='about-content'>✔️ C++</p>
-              <p className='about-content'>✔️ Java</p>
-              <p className='about-content'>✔️ Kotlin</p>
-              <p className='about-content'>✔️ Python</p>
-              <p className='about-content'>✔️ Javascript</p>
-              <p className='about-content'>✔️ React</p>
-              <p className='about-content'>✔️ CSS</p>
-              <p className='about-content'>✔️ Android</p>
-              <p className='about-content'>✔️ AI/ML</p>
-              <p className='about-content'>✔️ AWS</p>
-              <p className='about-content'>✔️ NodeJS</p>
-              <p className='about-content'>...on going</p>
-            </Col>
-          </Row>
-        </Container>
+              {
+                skills.map(function(skill, ind){
+                  return(
+                    <Skill skill={skill} key={ind} />
+                    // <p className='about-content'>✔️ {skill.skill}</p>
+                  )
+                })
+              }
+              <p className='about-skill-content'>...on going</p>
+            </div>
+          </div>
+        </div>
       </div>
 
+      {/* PROJECTS */}
       <div style={{backgroundColor: '#10459E', paddingTop: '40px', paddingBottom: '40px'}}>
         <h1 className='heading' style={{color: 'white'}}>PROJECTS</h1>
       </div>
+
+      {/* CONTACT */}
       <div >
-        <h1 className='heading' style={{color: '#10459E', paddingTop: '40px', paddingBottom: '40px'}}>CONTACT</h1>
-        <p>연락이 필요하시다면 아래 형식에 맞춰 메세지를 제출해주세요! 최대한 빨리 답변해드리도록 하겠습니다 :)</p>
-        <p>If you wish to contact me, please leave your message below. I will get back to you as soon as possible! :)</p>
+        <h1 className='heading' style={{color: '#10459E', paddingTop: '40px', paddingBottom: '20px'}}>CONTACT</h1>
+        <Content>연락이 필요하시다면 아래 형식에 맞춰 메세지를 제출해주세요! 최대한 빨리 답변해드리도록 하겠습니다 :)</Content>
+        <Content>If you wish to contact me, please leave your message below. I will get back to you as soon as possible! :)</Content>
 
-        <Container>
-          <Row>
-            <Col> 
+        <div className='container' style={{width: '100%'}}>
+          <div className='row'>
+            <div className='col-sm-4'> 
               <img className='profile-img' src={contactImg}/> 
-              <div>
-                <p>Email: heejin444@gmail.com</p>
-                <p>Phone: +82-10-3700-6723</p>
-                <p>GITHUB | IG | FB</p>
-              </div>
-
-            </Col>
-            <Col>
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
-              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"/>
+              <Contact/>
             </div>
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
-              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"/>
+            <div className='col-sm-8'>
+              <FormControl fullWidth sx={{ m: 1 }}>
+                <InputLabel htmlFor="outlined-adornment-amount">Name</InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-amount"
+                  value={values.name}
+                  onChange={handleChange('name')}
+                  label="Name"
+                />
+              </FormControl>
+              <FormControl fullWidth sx={{ m: 1 }}>
+                <InputLabel htmlFor="outlined-adornment-amount">Email</InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-amount"
+                  value={values.email}
+                  onChange={handleChange('email')}
+                  label="Email"
+                />
+              </FormControl>
+              <FormControl fullWidth sx={{ m: 1 }}>
+                <InputLabel htmlFor="outlined-adornment-amount">Subject</InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-amount"
+                  value={values.subject}
+                  onChange={handleChange('subject')}
+                  label="Subject"
+                />
+              </FormControl>
+              <FormControl fullWidth sx={{ m: 1 }}>
+                <InputLabel htmlFor="outlined-adornment-amount">Message</InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-amount"
+                  value={values.message}
+                  onChange={handleChange('message')}
+                  label="Message"
+                />
+              </FormControl>
+              <button type="button" class="btn btn-primary">Submit</button>
             </div>
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-default">Subject</span>
-              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"/>
-            </div>
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-default">Message</span>
-              <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"/>
-            </div>
-            <button type="button" class="btn btn-primary">Submit</button>
-            </Col>
-          </Row>
-        </Container>
+          </div>
+        </div>
+        <p style={{color: '#ababab'}}>Developed and Designed by Jennifer Heejin Kang  |  Copyright 2022 Heejin Kang</p>
       </div>
-      <p>Developed and Designed by Jennifer Heejin Kang  |  Copyright 2022 Heejin Kang</p>
     </div>
   );
+}
+
+function AboutCard(props){
+  return(
+    <div>
+      <p className='about-sub-title'>{props.value.title}</p>
+      <p className='about-content'>{props.value.content} | {props.value.period}</p>
+    </div>
+  )
+}
+
+function Skill(props){
+  var level = "";
+  if(props.skill.level == 1){
+    level = "⭐️"
+  }
+  else if (props.skill.level == 2){
+    level = "⭐️⭐️"
+  }
+  else{
+    level = "⭐️⭐️⭐️"
+  }
+  return(
+    <p className='about-skill-content'>✔️ {props.skill.skill} {level}</p>
+  )
+}
+
+function Contact(){
+  var [info, setInfo] = useState(ContactInfo);
+
+  return (
+    <div>
+      <Content style={{marginTop: '10px'}}>Email: heejin444@gmail.com</Content>
+      <Content>Phone: +82-10-3700-6723</Content>
+      <Content>
+        {
+          info.map(function(i, ind){
+            return (
+              <Icons href={i.link} target="_blank" rel="noreferrer noopener">
+                <img src={i.img} width={i.width}/>
+              </Icons>
+            )
+          })
+        }
+      </Content>
+    </div>
+  )
 }
 
 export default App;
